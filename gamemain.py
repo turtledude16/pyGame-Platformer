@@ -143,9 +143,6 @@ while True:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
                 P1.cancel_jump()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                P1.vel.y = -60
     #Game over check  
     if P1.rect.top > HEIGHT:
         for entity in all_sprites:
