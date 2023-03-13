@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.jumping = False
+        self.score = 0
 
     #Handle movement
     def move(self):
@@ -64,6 +65,9 @@ class Player(pygame.sprite.Sprite):
         if self.vel.y > 0:
             if hits:
                 if self.pos.y < hits[0].rect.bottom: 
+                    if hits[0].point == True:
+                        hits[0].point = False
+                        self.score += 1
                     self.pos.y = hits[0].rect.top + 1
                     self.vel.y = 0
                     self.jumping = False
@@ -76,6 +80,7 @@ class platform(pygame.sprite.Sprite):
         self.surf = pygame.Surface((random.randint(50, 100), 12))
         self.surf.fill((255, 0, 0))
         self.rect = self.surf.get_rect(center = (random.randint(0, WIDTH-10), random.randint(0, HEIGHT-30)))
+        self.point = True
 
     def move(self):
         pass
@@ -107,7 +112,7 @@ def plat_gen():
 
 PT1 = platform()
 P1 = Player()
-
+PT1.point = False
 #Draw sprites
 PT1.surf = pygame.Surface((WIDTH, 20))
 PT1.surf.fill((255, 0, 0))
@@ -164,6 +169,10 @@ while True:
                 plat.kill()
 
     displaysurface.fill((0,0,0))
+    f = pygame.font.SysFont("Verdana", 20)
+    g = f.render(str(P1.score), True, (123, 255, 0))
+    displaysurface.blit(g, (WIDTH/2, 10))
+
     plat_gen()
 
     for entity in all_sprites:
