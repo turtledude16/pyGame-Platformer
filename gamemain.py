@@ -169,15 +169,14 @@ while True:
                 plat.kill()
 
     displaysurface.fill((0,0,0))
-    f = pygame.font.SysFont("Verdana", 20)
-    g = f.render(str(P1.score), True, (123, 255, 0))
-    displaysurface.blit(g, (WIDTH/2, 10))
-
     plat_gen()
-
     for entity in all_sprites:
         displaysurface.blit(entity.surf, entity.rect)
         entity.move()
+    
+    f = pygame.font.SysFont("Verdana", 20)
+    g = f.render(str(P1.score), True, (123, 255, 0))
+    displaysurface.blit(g, (WIDTH/2, 10))
     
     pygame.display.update()
     FramePerSec.tick(FPS)
