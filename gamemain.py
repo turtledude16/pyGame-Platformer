@@ -85,8 +85,11 @@ class platform(pygame.sprite.Sprite):
         self.moving = True
 
     def move(self):
+        hits = self.rect.colliderect(P1.rect)
         if self.moving == True:
             self.rect.move_ip(self.speed, 0)
+            if hits:
+                P1.pos += (self.speed, 0)
             if self.speed > 0 and self.rect.left > WIDTH:
                 self.rect.right = 0
             if self.speed < 0 and self.rect.right < 0:
