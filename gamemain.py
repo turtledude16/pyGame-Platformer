@@ -95,6 +95,25 @@ class platform(pygame.sprite.Sprite):
             if self.speed < 0 and self.rect.right < 0:
                 self.rect.left = WIDTH
 
+    def generateCoin(self):
+        if(self.speed == 0):
+            coins.add(Coin((self.rect.centerx, self.rect.centery - 50)))
+
+#Coin class
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, pos):
+        super().__init__()
+
+        self.image = pygame.image.load("Coin.png")
+        self.rect = self.image.get_rect()
+
+        self.rect.topleft = pos
+
+    def update(self):
+        if self.rect.colliderect(P1.rect):
+            P1.score += 5
+            self.kill()
+        
 def check(platform, groupies):
     if pygame.sprite.spritecollideany(platform,groupies):
         return True
@@ -117,6 +136,7 @@ def plat_gen():
             p.rect.center = (random.randrange(0, WIDTH - width), random.randrange(-50, 0))
             C = check(p, platforms)
         
+        p.generateCoin()
         platforms.add(p)
         all_sprites.add(p)
 
@@ -137,12 +157,15 @@ all_sprites.add(P1)
 platforms = pygame.sprite.Group()
 platforms.add(PT1)
 
+coins = pygame.sprite.Group()
+
 for x in range(random.randint(4,5)):
     C = True
     pl = platform()
     while C:
         pl = platform()
         C = check(pl, platforms)
+    pl.generateCoin()
     platforms.add(pl)
     all_sprites.add(pl)
 
@@ -179,12 +202,22 @@ while True:
             if plat.rect.top >= HEIGHT:
                 plat.kill()
 
+        for coin in coins:
+            coin.rect.y += abs(P1.vel.y)
+            if coin.rect.top >= HEIGHT:
+                coin.kill()
+
     displaysurface.fill((0,0,0))
     plat_gen()
+
     for entity in all_sprites:
         displaysurface.blit(entity.surf, entity.rect)
         entity.move()
-    
+
+    for coin in coins:
+        displaysurface.blit(coin.image, coin.rect)
+        coin.update()
+
     f = pygame.font.SysFont("Verdana", 20)
     g = f.render(str(P1.score), True, (255, 255, 255))
     displaysurface.blit(g, (WIDTH/2, 10))
