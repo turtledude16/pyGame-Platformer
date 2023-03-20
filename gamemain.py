@@ -17,8 +17,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         
-        self.surf = pygame.Surface((30, 30))
-        self.surf.fill((128, 255, 40))
+        self.surf = pygame.image.load("snowman.png")       
         self.rect = self.surf.get_rect()
         
         self.pos = vec((10, 360))
@@ -75,11 +74,14 @@ class Player(pygame.sprite.Sprite):
 
 #Platform class
 class platform(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, width = 0, height = 18):
         super().__init__()
-        self.surf = pygame.Surface((random.randint(50, 100), 12))
-        self.surf.fill((255, 0, 0))
-        self.rect = self.surf.get_rect(center = (random.randint(0, WIDTH-10), random.randint(0, HEIGHT-40)))
+        if width == 0:
+            width = random.randint(50,120)
+
+            self.image = pygame.image.load("platform.png")
+            self.surf = pygame.transform.scale(self.image, (width, height))
+            self.rect = self.surf.get_rect(center = (random.randint(0, WIDTH-10), random.randint(0, HEIGHT-40)))
         self.point = True
         self.speed = random.randint(-1, 1)
         self.moving = True
@@ -145,6 +147,7 @@ P1 = Player()
 PT1.point = False
 PT1.moving = False
 #Draw sprites
+background = pygame.image.load("background.png")
 PT1.surf = pygame.Surface((WIDTH, 20))
 PT1.surf.fill((255, 0, 0))
 PT1.rect = PT1.surf.get_rect(center =(WIDTH/2, HEIGHT -10))
@@ -208,6 +211,7 @@ while True:
                 coin.kill()
 
     displaysurface.fill((0,0,0))
+    displaysurface.blit(background, (0,0))
     plat_gen()
 
     for entity in all_sprites:
