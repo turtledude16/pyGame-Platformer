@@ -142,14 +142,15 @@ def plat_gen():
         platforms.add(p)
         all_sprites.add(p)
 
-PT1 = platform()
+PT1 = platform(450, 80)
 P1 = Player()
 PT1.point = False
 PT1.moving = False
 #Draw sprites
 background = pygame.image.load("background.png")
-PT1.surf = pygame.Surface((WIDTH, 20))
-PT1.surf.fill((255, 0, 0))
+PT1.surf = pygame.image.load("platform.png")
+#PT1.surf.fill((255, 0, 0))
+PT1.surf = pygame.transform.scale(PT1.surf, (450,80))
 PT1.rect = PT1.surf.get_rect(center =(WIDTH/2, HEIGHT -10))
 
 
