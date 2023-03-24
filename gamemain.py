@@ -11,6 +11,12 @@ FPS = 60
 FramePerSec = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Platform Jumper!")
+#sounds
+pygame.mixer.music.load("Super_Mario_Bros_Snow.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(loops=-1)
+JUMP_SOUND = pygame.mixer.Sound("Mario_Jump.mp3")
+JUMP_SOUND.set_volume(0.5)
 
 #player class
 class Player(pygame.sprite.Sprite):
@@ -182,6 +188,8 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:    
             if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                if P1.jumping == False:
+                    JUMP_SOUND.play()
                 P1.jump()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
