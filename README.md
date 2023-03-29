@@ -5,3 +5,5 @@ https://coderslegacy.com/python/pygame-platformer-game-development/
 Music: https://youtu.be/hg8XLypx2Pw
 
 Jump sound: https://www.youtube.com/watch?v=z-WdGWGrWnk
+
+Coin grab sound: https://www.youtube.com/watch?v=TuZNZB9EYps
