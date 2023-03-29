@@ -17,6 +17,8 @@ pygame.mixer.music.set_volume(0.25)
 pygame.mixer.music.play(loops=-1)
 JUMP_SOUND = pygame.mixer.Sound("Mario_Jump.mp3")
 JUMP_SOUND.set_volume(0.5)
+COIN_GRAB = pygame.mixer.Sound("Mario_Coin.mp3")
+COIN_GRAB.set_volume(0.5)
 
 #player class
 class Player(pygame.sprite.Sprite):
@@ -120,6 +122,7 @@ class Coin(pygame.sprite.Sprite):
     def update(self):
         if self.rect.colliderect(P1.rect):
             P1.score += 5
+            COIN_GRAB.play()
             self.kill()
         
 def check(platform, groupies):
